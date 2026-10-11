@@ -39,7 +39,7 @@ type Session struct {
 	padding   *atomic.TypedValue[*padding.PaddingFactory]
 	logger    logger.Logger
 
-	peerVersion byte
+	peerVersion atomic.Uint32
 
 	// client
 	isClient    bool
@@ -139,7 +139,7 @@ func (s *Session) OpenStream() (*Stream, error) {
 	sid := s.streamId.Add(1)
 	stream := newStream(sid, s)
 
-	if sid >= 2 && s.peerVersion >= 2 {
+	if sid >= 2 && s.peerVersion.Load() >= 2 {
 		s.synDoneLock.Lock()
 		if s.synDone != nil {
 			s.synDone()
@@ -283,7 +283,7 @@ func (s *Session) recvLoop() error {
 						}
 						// check client's version
 						if v, err := strconv.Atoi(m["v"]); err == nil && v >= 2 {
-							s.peerVersion = byte(v)
+							s.peerVersion.Store(uint32(byte(v)))
 							// send cmdServerSettings
 							f := newFrame(cmdServerSettings, 0)
 							f.data = util.StringMap{
@@ -344,7 +344,7 @@ func (s *Session) recvLoop() error {
 						// check server's version
 						m := util.StringMapFromBytes(buffer)
 						if v, err := strconv.Atoi(m["v"]); err == nil {
-							s.peerVersion = byte(v)
+							s.peerVersion.Store(uint32(byte(v)))
 						}
 					}
 					buf.Put(buffer)
