@@ -1,0 +1,30 @@
+{
+  "schema": "solovey.core-patch-queue/v1",
+  "sourceAuthority": "https://github.com/anytls/sing-anytls",
+  "copyRepository": "https://github.com/MalenkiySolovey/sing-anytls",
+  "copyRole": "mirror/cache/development",
+  "base": "130d2e61b8895727bfed4942c535e91b246a9603",
+  "upstreamTree": "4e18e8c0f95c4cea2249b4cfacc7a83d91a31f50",
+  "pristineRef": "refs/heads/mirror/v0.0.11",
+  "patchBranch": "solovey/anytls-patches",
+  "codeTree": "7097f65cc5f010e513de42115cb42b9ef8b6be6a",
+  "patchIds": [
+    "ANYTLS-0001"
+  ],
+  "legacyAcceptedCommits": {
+    "8f440972b353f7ace3bbfbac9cf291938de5ab19": "ANYTLS-0001"
+  },
+  "metadataPaths": [
+    ".github/workflows/solovey-patch-queue.yml",
+    "scripts/verify-solovey-queue.py",
+    "docs/solovey/queue.json",
+    "docs/solovey/ANYTLS_COPY_BASELINE.md",
+    "docs/solovey/UPSTREAM_REBASE_PROCEDURE.md"
+  ],
+  "regressionPackages": [
+    "./session"
+  ],
+  "buildTags": "",
+  "localPatchesClassification": "ENGINE_PATCH_REQUIRED",
+  "upstreamContributionStatus": "CANDIDATES_PREPARED_NOT_SUBMITTED"
+}
